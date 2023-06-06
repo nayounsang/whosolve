@@ -25,7 +25,19 @@ client.login(token.token);
 // help command
 client.on('messageCreate', (message) => {
     if (message.content.startsWith('!help')) {
-
+        const embed = {
+            title: `명령어 목록`,
+            color: 0x0099FF,
+            description: '깃허브 링크: https://github.com/nayounsang/whosolve',
+            fields: [
+                { name: '!addme (bojid)', value: '봇에 자신의 bojid를 추가합니다. discord프로필과 1대1매칭됩니다.' },
+                { name: '!rewriteme (bojid)', value: '기존에 봇에 있던 bojid를 새로 수정합니다.' },
+                { name: '!deleteme', value: '봇에 있는 자신의 정보를 삭제합니다.' },
+                { name: '!getme', value: '자신의 정보를 확인합니다.' },
+                { name: '!whosolve (problem number)', value: '봇에 등록된 사람중 해당 백준 문제를 푼 사람을 알려줍니다.' },
+            ]
+        }
+        message.author.send({ embeds: [embed] });
     }
 })
 
@@ -117,10 +129,10 @@ client.on('messageCreate', async (message) => {
         let state;
         const num = args[1];
         if (args.length <= 2) {
-            state = true //default
+            state = true //default, private
         }
         else {
-            state = args[2] == 'private' ? true : false;
+            state = args[2] == 'public' ? false : true;
         }
         const guildId = message.guild.id;
         const users = getUserjson();
