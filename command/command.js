@@ -42,7 +42,7 @@ const commands = [
             {
                 name: 'num',
                 description: '문제번호',
-                type: 3,
+                type: 4,
                 required: true,
             },
         ]

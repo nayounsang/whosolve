@@ -85,15 +85,16 @@ export async function getMe(interaction) {
 export async function whoSolveCommand(interaction) {
     const users = getUserjson();
     const guildId = interaction.guildId;
-    const num = interaction.options.getString('num');
+    let num = interaction.options.getInteger('num');
+    console.log(num);
 
-    if (!num || !(3 <= num.length <= 6)) {
+    if (!num || num < 1000) {
         interaction.reply('올바른 문제번호를 입력해주세요');
     } else if (!users.hasOwnProperty(guildId)) {
         interaction.reply('현재 등록된 사용자가 없습니다.');
     } else {
         const result = await whoSolve(num, guildId);
-        console.log(result);
+        num = String(num);
         let descrip;
         if (result.length > 0 && result[0] == -1) {
             descrip = result[1];
