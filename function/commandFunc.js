@@ -82,35 +82,54 @@ export async function getMe(interaction) {
 
 }
 
+async function isVaildProblem(num) {
+    const s = fetch(`https://www.acmicpc.net/problem/${num}`)
+        .then((response) => {
+            if (response.ok) {
+                return 0;
+            } else {
+                return 1;
+            }
+        })
+        .catch((error) => {
+            return 2;
+        });
+    return s
+}
+
 export async function whoSolveCommand(interaction) {
     const users = getUserjson();
     const guildId = interaction.guildId;
     let num = interaction.options.getInteger('num');
-    console.log(num);
 
-    if (!num || num < 1000) {
+    const state = await isVaildProblem(num);
+
+    if (state == 1) {
         interaction.reply('올바른 문제번호를 입력해주세요');
+    } else if (state == 2) {
+        interaction.reply('API 에러');
     } else if (!users.hasOwnProperty(guildId)) {
         interaction.reply('현재 등록된 사용자가 없습니다.');
     } else {
         const result = await whoSolve(num, guildId);
         num = String(num);
+
         let descrip;
         if (result.length > 0 && result[0] == -1) {
             descrip = result[1];
-        }
-        else if (result.length == 0) {
+        } else if (result.length == 0) {
             descrip = '이 문제를 푼 사람이 없습니다';
-        }
-        else {
+        } else {
             descrip = result.join(', ');
         }
+
         const embed = {
             title: `${num}을 푼 사람`,
             color: 0x0099FF,
             url: `https://www.acmicpc.net/problem/${num}`,
             description: `${descrip}`
         }
+
         interaction.reply({ embeds: [embed] });
     }
 
