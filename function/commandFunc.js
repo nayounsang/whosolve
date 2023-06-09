@@ -146,7 +146,7 @@ export async function help(interaction) {
             { name: '!rewriteme (bojid)', value: '기존에 봇에 있던 bojid를 새로 수정합니다.' },
             { name: '!deleteme', value: '봇에 있는 자신의 정보를 삭제합니다.' },
             { name: '!getme', value: '자신의 정보를 확인합니다.' },
-            { name: '!whosolve (problem number) (public)', value: '봇에 등록된 사람중 해당 백준 문제를 푼 사람을 알려줍니다. 뒤에 pubplic을 적는다면 서버에 보냅니다.' },
+            { name: '!whosolve (problem number)', value: '봇에 등록된 사람중 해당 백준 문제를 푼 사람을 알려줍니다.' },
         ],
         footer: {
             text: '링크를 누르면 깃허브로 이동합니다.'
